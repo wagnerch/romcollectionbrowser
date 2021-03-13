@@ -269,9 +269,8 @@ class DBUpdate(object):
                     break
                 except Exception as exc:
                     log.warn(u"An error occurred while adding game %s: %s" % (gamenameFromFile, exc))
-                    self.missingDescFile.add_entry(gamenameFromFile)
-
-                    continue
+                    xbmcgui.Dialog().ok(util.localize(32128), str(exc))
+                    break
 
         # timestamp2 = time.clock()
         # diff = (timestamp2 - timestamp1) * 1000
