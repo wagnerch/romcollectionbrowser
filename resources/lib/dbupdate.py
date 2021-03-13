@@ -458,7 +458,7 @@ class DBUpdate(object):
         except Exception as e:
             log.error("Error searching for %s using scraper %s - %s %s" % (
                 gamenameFromFile, scraperSite.name, type(e), e))
-            return gameresult, artScrapers
+            raise
 
         if results == []:
             log.warn("No search results found for %s using scraper %s" % (gamenameFromFile, scraperSite.name))
@@ -476,7 +476,7 @@ class DBUpdate(object):
         except Exception as e:
             # FIXME TODO Catch exceptions specifically
             log.error("Error retrieving %s - %s %s" % (matched['id'], type(e), e))
-            return gameresult, artScrapers
+            raise
 
         # Update the gameresult with any new fields
         gameresult = self.addNewElements(gameresult, retrievedresult)
