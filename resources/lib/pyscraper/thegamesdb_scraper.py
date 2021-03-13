@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from web_scraper import WebScraper
 from util import Logutil as log
 from gamename_utils import GameNameUtil
+from rcbexceptions import *
 
 
 # FIXME TODO Exception handling (i.e. no games found)
@@ -100,7 +101,12 @@ class TheGamesDB_Scraper(WebScraper):
         code = response['code']
         status = response['status']
 
-        if code != 200 or status != "Success":
+        if code == 403:
+            raise ScraperExceededAPIQuoteException()
+        elif code != 200:
+            raise ScraperUnexpectedError(code + " - " + status)
+
+        if status != "Success":
             log.error("thegamesdb returned an error. Code = %s, Status = %s" %(code, status))
             return results
 
